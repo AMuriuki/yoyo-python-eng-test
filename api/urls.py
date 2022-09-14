@@ -7,5 +7,5 @@ from .views import *
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('locations/<string:city>', get_city_temp, name='get_city_temp')
+    path('locations/<city>', get_city_temp, name='get_city_temp')
 ]
