@@ -10,5 +10,5 @@ from rest_framework.response import Response
 @api_view()
 def get_city_temp(request):
     return Response({
-
+        
     })
