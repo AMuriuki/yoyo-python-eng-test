@@ -22,14 +22,19 @@ def get_city_temp(request, city):
     # check if input value is valid
     if is_valid_queryparam(days) == "is valid":
         # structure url
-        print(days)
         url = WEATHER_API_BASE_URL + "/forecast.json?key="+api_key + \
             "&q=" + city + "&days="+days+"&aqi=no&alerts=no"
 
-        print(url)
-
-        response = requests.get(url)
-        result = response.json()
+        try:
+            response = requests.get(url)
+            # if response was successful
+            result = response.json()
+        except requests.exceptions.Timeout as e:
+            print("Timeout error:", e)
+        except requests.HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')  
+        except Exception as err:
+            print(f'Other error occurred: {err}')  
 
         if response.status_code == 200:
             data = get_data(result)
