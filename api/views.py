@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-from api.utils import WEATHER_API_BASE_URL, get_average, is_valid_queryparam, get_maximum, get_median, get_minimum
+from api.utils import WEATHER_API_BASE_URL, get_average, get_data, is_valid_queryparam, get_maximum, get_median, get_minimum
 
 # Create your views here.
 
@@ -22,8 +22,11 @@ def get_city_temp(request, city):
     # check if input value is valid
     if is_valid_queryparam(days) == "is valid":
         # structure url
+        print(days)
         url = WEATHER_API_BASE_URL + "/forecast.json?key="+api_key + \
-            "&q=" + city + "& days = "+days+" & aqi = no & alerts = no"
+            "&q=" + city + "&days="+days+"&aqi=no&alerts=no"
+
+        print(url)
 
         response = requests.get(url)
         result = response.json()
@@ -34,7 +37,12 @@ def get_city_temp(request, city):
             minimum = get_minimum(data)
             average = get_average(data)
             median = get_median(data)
-            return Response({})
+            return Response({
+                "maximum": maximum,
+                "minimum": minimum,
+                "average": average,
+                "median": median,
+            })
         else:
             return Response(result)
 
