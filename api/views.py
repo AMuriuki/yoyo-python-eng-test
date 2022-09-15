@@ -5,8 +5,9 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
+from api.utils import WEATHER_API_BASE_URL, get_average, is_valid_queryparam, get_maximum, get_median, get_minimum
+
 # Create your views here.
-WEATHER_API_BASE_URL = "http://api.weatherapi.com/v1"
 
 
 @api_view()
@@ -15,20 +16,27 @@ def get_city_temp(request, city):
     # get api key
     api_key = settings.WEATHER_API_KEY
 
-    # url form
-    url = WEATHER_API_BASE_URL + "/forecast.json?key="+api_key+"&q=" + city + "& days = 10 & aqi = no & alerts = no"
+    # get days
+    days = request.GET.get('days')
 
-    #TODO: 
-    # 1. test cases & coverage
-    # 2. best practices - input validation; error handling etc.
-    # 3. well structured readme.md
-    # 4. response format for request
+    # check if input value is valid
+    if is_valid_queryparam(days) == "is valid":
+        # structure url
+        url = WEATHER_API_BASE_URL + "/forecast.json?key="+api_key + \
+            "&q=" + city + "& days = "+days+" & aqi = no & alerts = no"
 
-    # get response object from api
-    response = requests.get(url)
+        response = requests.get(url)
+        result = response.json()
 
-    print(response)
+        if response.status_code == 200:
+            data = get_data(result)
+            maximum = get_maximum(data)
+            minimum = get_minimum(data)
+            average = get_average(data)
+            median = get_median(data)
+            return Response({})
+        else:
+            return Response(result)
 
-    return Response({
-
-    })
+    else:
+        return Response({"message": is_valid_queryparam(days)})
