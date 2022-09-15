@@ -7,7 +7,7 @@ def is_valid_queryparam(data):
     if data != '' and data is not None:
         try:
             int(data)
-            return True
+            return "is valid"
         except ValueError:
             return "Value provided is not an integer"
     else:
