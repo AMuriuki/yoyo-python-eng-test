@@ -27,7 +27,7 @@ WEATHER_API_KEY = env('WEATHER_API_KEY')
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pmv9+l-#3zgy3k=!!&az3#9+x()g@*o9rdfokv6(jc6pfyei2v'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
