@@ -41,12 +41,10 @@ class WeatherAPITestCase(APITestCase):
         When invalid period is provided
         """
         url = reverse('get_city_temp', kwargs={
-                      'city': 'Lo'})
+                      'city': 'London'})
 
-        response = self.client.get(url, {'days': 10})
+        response = self.client.get(url, {'days': 'ten'})
         result = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(result['error']['code'], 1006)
-        self.assertEqual(result['error']['message'],
-                         "No matching location found.")
+        self.assertEqual(result['message'], "Value provided is not an integer")
