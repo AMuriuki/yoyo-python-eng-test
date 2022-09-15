@@ -29,3 +29,11 @@ def get_average(list):
 
 def get_median(list):
     return statistics.median(list)
+
+
+def get_data(result):
+    data = []
+    forecast = result['forecast']
+    for item in forecast['forecastday']:
+        data.append(item['day']['avgtemp_c'])
+    return data
