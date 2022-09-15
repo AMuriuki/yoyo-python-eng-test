@@ -32,15 +32,15 @@ WEATHER_API_KEY=<YOUR-WEATHER-API-KEY>
 SECRET_KEY=<YOUR-SECRET-KEY>
 ```
 ## Running a local instance
-* Start up the server
-```
-$ python manage.py runserver
-```
 * Run tests
 ```
 $ python manage.py test api
 ```
+* Start up the server
+```
+$ python manage.py runserver
+```
 * Example API request:
 ```
-localhost/api/locations/London?days=3
+localhost:8000/api/locations/London?days=3
 ``` 
