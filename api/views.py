@@ -38,15 +38,11 @@ def get_city_temp(request, city):
 
         if response.status_code == 200:
             data = get_data(result)
-            maximum = max(data)
-            minimum = min(data)
-            average = get_average(data)
-            median = get_median(data)
             return Response({
-                "maximum": maximum,
-                "minimum": minimum,
-                "average": average,
-                "median": median,
+                "maximum": max(data),
+                "minimum": min(data),
+                "average": get_average(data),
+                "median": get_median(data),
             })
         else:
             return Response(result)
