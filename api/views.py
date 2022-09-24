@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-from api.utils import WEATHER_API_BASE_URL, get_average, get_data, is_valid_queryparam, get_median
+from api.utils import WEATHER_API_BASE_URL, get_average, get_data, get_median
 
 # Create your views here.
 
@@ -20,7 +20,7 @@ def get_city_temp(request, city):
     days = request.GET.get('days')
 
     # check if input value is valid
-    if is_valid_queryparam(days) == "is valid":
+    if str(days).isnumeric():
         # structure url
         url = WEATHER_API_BASE_URL + "/forecast.json?key="+api_key + \
             "&q=" + city + "&days="+days+"&aqi=no&alerts=no"
@@ -48,4 +48,4 @@ def get_city_temp(request, city):
             return Response(result)
 
     else:
-        return Response({"message": is_valid_queryparam(days)})
+        return Response({"message": "Value provided is not an integer"})
