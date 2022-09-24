@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from django.test import TestCase
 
-from api.utils import get_average, get_maximum, get_minimum, get_median
+from api.utils import get_average, get_median
 
 
 class WeatherAPITestCase(APITestCase):
@@ -51,16 +51,6 @@ class WeatherAPITestCase(APITestCase):
 
 
 class MathFunctionsTestCase(TestCase):
-    def test_max(self):
-        data = [17.8, 20.5, 21.7, 13.6, 25.4]
-        max = get_maximum(data)
-        self.assertEqual(max, 25.4)
-
-    def test_min(self):
-        data = [17.8, 20.5, 21.7, 13.6, 25.4]
-        min = get_minimum(data)
-        self.assertEqual(min, 13.6)
-
     def test_average(self):
         data = [17.8, 20.5, 21.7, 13.6, 25.4]
         avg = get_average(data)

@@ -14,14 +14,6 @@ def is_valid_queryparam(data):
         return "No value provided"
 
 
-def get_maximum(list):
-    return max(list)
-
-
-def get_minimum(list):
-    return min(list)
-
-
 def get_average(list):
     avg = sum(list) / len(list)
     return round(avg, 1)

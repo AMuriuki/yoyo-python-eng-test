@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-from api.utils import WEATHER_API_BASE_URL, get_average, get_data, is_valid_queryparam, get_maximum, get_median, get_minimum
+from api.utils import WEATHER_API_BASE_URL, get_average, get_data, is_valid_queryparam, get_median
 
 # Create your views here.
 
@@ -38,8 +38,8 @@ def get_city_temp(request, city):
 
         if response.status_code == 200:
             data = get_data(result)
-            maximum = get_maximum(data)
-            minimum = get_minimum(data)
+            maximum = max(data)
+            minimum = min(data)
             average = get_average(data)
             median = get_median(data)
             return Response({
