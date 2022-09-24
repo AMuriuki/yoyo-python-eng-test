@@ -1,20 +1,31 @@
 import statistics
-
-WEATHER_API_BASE_URL = "http://api.weatherapi.com/v1"
-
-
-def get_average(list):
-    avg = sum(list) / len(list)
-    return round(avg, 1)
+from typing import Union
+from dataclasses import dataclass
 
 
-def get_median(list):
-    return statistics.median(list)
+@dataclass
+class WeatherData:
+    temperature_data: dict
 
+    def __post_init__(self) -> None:
+        data = []
+        for item in self.temperature_data["forecast"]["forecastday"]:
+            data.append(
+                self.__convert_str_to_num(val=item["day"]["avgtemp_c"])
+            )
+        self.data = data
 
-def get_data(result):
-    data = []
-    forecast = result['forecast']
-    for item in forecast['forecastday']:
-        data.append(item['day']['avgtemp_c'])
-    return data
+    def __convert_str_to_num(self, val: str) -> Union[int, float]:
+        try:
+            return int(val)
+        except ValueError:
+            return float(val)
+
+    @property
+    def summary(self) -> dict:
+        return {
+            "maximum": max(self.data),
+            "minimum": min(self.data),
+            "average": round(sum(self.data) / len(self.data), 1),
+            "median": statistics.median(self.data),
+        }
