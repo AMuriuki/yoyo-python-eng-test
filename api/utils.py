@@ -1,39 +1,31 @@
 import statistics
+from typing import Union
+from dataclasses import dataclass
 
-WEATHER_API_BASE_URL = "http://api.weatherapi.com/v1"
 
+@dataclass
+class WeatherData:
+    temperature_data: dict
 
-def is_valid_queryparam(data):
-    if data != '' and data is not None:
+    def __post_init__(self) -> None:
+        data = []
+        for item in self.temperature_data["forecast"]["forecastday"]:
+            data.append(
+                self.__convert_str_to_num(val=item["day"]["avgtemp_c"])
+            )
+        self.data = data
+
+    def __convert_str_to_num(self, val: str) -> Union[int, float]:
         try:
-            int(data)
-            return "is valid"
+            return int(val)
         except ValueError:
-            return "Value provided is not an integer"
-    else:
-        return "No value provided"
+            return float(val)
 
-
-def get_maximum(list):
-    return max(list)
-
-
-def get_minimum(list):
-    return min(list)
-
-
-def get_average(list):
-    avg = sum(list) / len(list)
-    return round(avg, 1)
-
-
-def get_median(list):
-    return statistics.median(list)
-
-
-def get_data(result):
-    data = []
-    forecast = result['forecast']
-    for item in forecast['forecastday']:
-        data.append(item['day']['avgtemp_c'])
-    return data
+    @property
+    def summary(self) -> dict:
+        return {
+            "maximum": max(self.data),
+            "minimum": min(self.data),
+            "average": round(sum(self.data) / len(self.data), 1),
+            "median": statistics.median(self.data),
+        }

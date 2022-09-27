@@ -34,7 +34,7 @@ SECRET_KEY=<YOUR-SECRET-KEY>
 ## Running a local instance
 * Run tests
 ```
-$ python manage.py test api
+$ pytest
 ```
 * Start up the server
 ```

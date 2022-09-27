@@ -21,7 +21,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 WEATHER_API_KEY = env('WEATHER_API_KEY')
-
+WEATHER_API_BASE_URL = env('WEATHER_API_BASE_URL')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
